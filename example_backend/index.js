@@ -10,7 +10,9 @@ const apiKey = process.env.API_KEY;
 app.use(cors());
 
 app.use(express.json());
-
+app.get("/", (req, res) => {
+  res.send("Express on Vercel");
+});
 app.post("/create-web-call", async (req, res) => {
   const { agent_id, metadata, retell_llm_dynamic_variables } = req.body;
 
@@ -25,9 +27,7 @@ app.post("/create-web-call", async (req, res) => {
   if (retell_llm_dynamic_variables) {
     payload.retell_llm_dynamic_variables = retell_llm_dynamic_variables;
   }
-  app.get("/", (req, res) => {
-    res.send("Express on Vercel");
-  });
+
   try {
     const response = await axios.post(
       "https://api.retellai.com/v2/create-web-call",
